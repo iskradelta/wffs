@@ -1,0 +1,80 @@
+{% extends "base_site.html" %}
+
+{% block container-content %}
+
+{#    {{  show default root file system here, then replace the div with Results }}#}
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#result-container").hide();
+        $("#searching").hide();
+        $("#indexing").hide();
+        $("#search_box").keyup(function(event) {
+            if(event.keyCode == 13){
+                $("#search-button").click();
+            }
+        });
+
+        $("#search-button").click(function() {
+            $("#browse-container").fadeOut(400, function() {
+                $("#searching").fadeIn(100);
+
+                var jqxhr = $.get("/search", { term: $("#search_box").val() }
+                        )
+                        .success(function(data) {
+                            $("#searching").fadeOut(300);
+                            $("#results").html(data);
+                            $("#result-container").fadeIn(600, function() {});
+                        })
+                        .error(function() { $("#log").html("error"); })
+                        .complete(function() { $("#log").html("complete"); });
+
+                // perform other work here ...
+            });
+        });
+    });
+    function search() {
+        $("#searching").fadeIn(100);
+                var jqxhr = $.get("/search", { term: $("#search_term").val() }
+                        )
+                        .success(function(data) {
+                            $("#searching").fadeOut(300);
+                            $("#results").html(data);
+                            $("#result-container").fadeIn(600, function() {});
+                        })
+                        .error(function() { $("#log").html("error"); })
+                        .complete(function() { $("#log").html("complete"); });
+
+    }
+
+    </script>
+    <div id="browse-container" class="row">
+        <div id="browser" class="span16">
+            <h2>Browser</h2>
+            <p>A file browser will be here shortley.</p>
+        </div>
+    </div>
+
+    <div id="result-container" class="row">
+        <div id="results" class="span16">
+            {#    {{  make a pill navigation bar with "similar term" "search history" (for this device using local storage) etc }}#}
+{#            {% include 'snippets/result_list.html' %}#}
+        </div>
+    </div>
+
+    <div id="indexing" class="well popover-well">
+         <div class="popover-wrapper">
+          <div class="popover left">
+            <div class="arrow"></div>
+            <div class="inner">
+              <h3 class="title">Searching...</h3>
+              <div class="content">
+                <p>animated search-thingie here or spell-suggestions later?</p>
+              </div>
+            </div>
+          </div>
+          <img width="220px" height="145px" src="" class="large-bird">
+        </div>
+      </div>
+
+{% endblock container-content %}

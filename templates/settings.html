@@ -1,0 +1,31 @@
+{% extends "base_site.html" %}
+
+{% block container-hero-content %}
+<h1>Settings</h1>
+    <p>Change directories indexed/searched</p>
+    <p>Set when to index, re-index</p>
+    <p>Select directories to exclude</p>
+    <p>Select patterns to exclude</p>
+    <p>Other stuff? Later</p>
+{% endblock container-hero-content %}
+
+{% block container-hero-content2 %}
+
+    <div class="columns span10">
+        <div style="padding: 14px 19px;" class="well">
+            <button class="btn default medium">Defaults</button>&nbsp;
+            <button class="btn primary medium">Apply</button>&nbsp;
+      </div>
+    </div>
+{% endblock container-hero-content2 %}
+
+{% block container-content %}
+    <div id="settings-container" class="row">
+        <div id="settings-status" class="span16">
+            <h2>Stats and settings in effect</h2>
+            <p>Table list here of directories searched</p>
+            <p>Directories excluded, stats on files dirs indexed</p>
+            <p>Database size, last time indexed, queries performed</p>
+        </div>
+    </div>
+{% endblock container-content %}

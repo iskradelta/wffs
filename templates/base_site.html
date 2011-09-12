@@ -1,0 +1,44 @@
+{% extends "abstract_base.html" %}
+
+{% block container-hero-unit %}
+<div class="row">
+    <div class="columns span13">
+        {% block container-hero-content %}
+            <h1>WFFS! </h1>
+            <p>This is a web frontend for your file server, it supports searching by
+                directory/filename/file-type etc and/or within your documents/files.
+                In short, find your stuff! Also you get nice links
+                to the results in various form.
+            </p>
+        {% endblock container-hero-content %}
+    </div>
+    <p>&nbsp;</p>
+
+    {% block container-hero-content2 %}
+        <div class="columns span9 offset3">
+
+            <input type="text" size="30" name="search_term" id="search_box" class="xxlarge"
+                   placeholder="Search ALL THE THINGS!">
+            <button id="search-button" class="btn primary medium">Go go go! &raquo;</button><big id="searching">...</big>
+            
+            <div class="columns offset4">
+                <form action="" method="GET">
+                    <small><a href="/adv_search">Advanced search</a></small>
+                </form>
+            </div>
+    </div>
+    {% endblock container-hero-content2 %}
+</div>
+{% endblock container-hero-unit %}
+
+
+{% block container-content %}
+    <div id="result-container" class="row">
+        <div id="results" class="span16">
+            {% block container-content-results %}
+                <h2>Something</h2>
+                <p>Goes here...
+            {% endblock container-content-results %}
+        </div>
+    </div>
+{% endblock container-content %}

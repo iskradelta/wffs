@@ -1,0 +1,97 @@
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+                $("#sortTableResult").tablesorter( {sortList: [[0,0]]} )
+        });
+        
+    // append to table new datas
+    $(document).ready(function() {
+    $("table").tablesorter();
+        $("#ajax-append").click(function() {
+            $.get("assets/ajax-content.html", function(html) {
+            // append the "ajax'd" data to the table body
+            $("table tbody").append(html);
+            // let the plugin know that we made a update
+            $("table").trigger("update");
+            // set sorting column and direction, this will sort on the first and third column
+            var sorting = [[2,1],[0,0]];
+            // sort on the first column
+            $("table").trigger("sorton",[sorting]);
+            });
+            return false;
+        });
+    });
+</script>
+
+{% if found_entries %}
+
+<h2>{{ found_entries|length }} Results</h2>
+<p>
+    Here be "{{ found_entries|length }} dragons found, scroll down for more and infinite scroll!
+    Use a cache on the server for all terms, which jquery will hit when reaching all the way down,
+    to offload the browser.
+</p>
+
+{#{{ add div columns things to show 2 rows, upper row show stat how many found lower row show sortTableResult }}#}
+
+<table id="sortTableResult" class="zebra-striped">
+    <thead>
+    <tr>
+        <th class="header">Path</th>
+        <th class="yellow header headerSortUp">Size</th>
+        <th class="gray header">Last accessed</th>
+        <th class="blue header">File type</th>
+        <th class="gray header">Owner</th>
+        <th class="green header">Links</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td>1</td>
+        <td>Test</td>
+        <td>mp3</td>
+        <td>fuzzy</td>
+        <td>feeling</td>
+        <td>smb | dl</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Test2</td>
+        <td>pdf</td>
+        <td>pdf</td>
+        <td>rrr</td>
+        <td>smb | dl</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>lols</td>
+        <td>Joe</td>
+        <td>Sixpack</td>
+        <td>rwx</td>
+        <td>smb | dl</td>
+    </tr>
+
+    {%  for entry in found_entries %}
+        <tr>
+            <td>{{ entry.path|truncatewords:8 }}</td>
+            <td>{{ entry.size|filesizeformat }}</td>
+            <td>{{ entry.atime|timesince }}</td>
+            <td>{{ entry.file_type|truncatewords:4 }}</td>
+            <td>{{ entry.owner }}</td>
+            <td><a href="smb://{{ request.get_host }}/{{ entry.path  }}">smb</a> |
+                <a href="file://{{ request.get_host }}/{{ entry.path }}">file</a>
+            </td>
+        </tr>
+    {% endfor %}
+    
+    </tbody>
+</table>
+
+{% else %}
+
+    <h2>Nothing found</h2>
+    <p>Try another search term</p>
+
+{% endif %}

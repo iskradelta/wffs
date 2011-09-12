@@ -1,0 +1,29 @@
+{% extends "base_site.html" %}
+
+{% block container-hero-content %}
+    <h1>About</h1>
+    <p>A simple web frontend for a file server. <br/>
+        Spiced up directory listings of apache or nginx.<br/>
+        With focus on KISS.</p>
+{% endblock container-hero-content %}
+
+{% block container-hero-content2 %}
+    
+{% endblock container-hero-content2 %}
+
+{% block container-content %}
+
+    <div id="howto-container" class="row">
+        <div id="howto" class="span16">
+            <h2>How to</h2>
+            <ul>
+                <li>Run this application on your file server,</li>
+                <li>configure the directories you wish to include, </li>
+                <li>add any sub directories or patterns to exclude from all</li>
+                <li>index it by visiting <a href="{% url raw-update %}">/updatedb</a>.</li>
+                <li>Then hit the search.</li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock container-content %}

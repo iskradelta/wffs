@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>{% block title %}{{ title }} WFFS - Web Frontend for your File Server{% endblock %}</title>
+    <meta name="description" content="A web frontend with search for your personal file server">
+    <meta name="author" content="Anto Cvitic">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="{{ STATIC_URL }}js/html5_ie.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="{{ STATIC_URL }}bootstrap-1.2.0.css" rel="stylesheet">
+
+    <!-- Le fav and fuck touch icons -->
+    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico">
+
+    <!-- Le scripts -->
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.3.min.js"></script>
+
+    <!-- Le our scripts -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function supports_input_placeholder() {
+                var i = document.createElement('input');
+                return 'placeholder' in i;
+            }
+
+            if (supports_input_placeholder) {
+                // yay
+            } else {
+                $("'[placeholder]'").focus(
+                        function() {
+                            var input = $(this);
+                            if (input.val() == input.attr("'placeholder'")) {
+                                input.val("''");
+                                input.removeClass("'placeholder'");
+                            }
+                        }).blur(
+                        function() {
+                            var input = $(this);
+                            if (input.val() == "''" || input.val() == input.attr("'placeholder'")) {
+                                input.addClass("'placeholder'");
+                                input.val(input.attr("'placeholder'"));
+                            }
+                        }).blur();
+                // clear it before submit
+                $("'[placeholder]'").parents("'form'").submit(function() {
+                    $(this).find("'[placeholder]'").each(function() {
+                        var input = $(this);
+                        if (input.val() == input.attr("'placeholder'")) {
+                            input.val("''");
+                        }
+                    })
+                });
+            }
+        });
+    </script>
+
+{% block extrastyle %}{% endblock %}
+{% block extrahead %}{% endblock %}
+
+</head>
+
+{% block bodydeclaration %}
+<body>
+{% endblock bodydeclaration %}
+
+<div class="topbar">
+        <div class="fill">
+        <div class="container">
+            {% block topbar_container %}
+
+                <h3><a href="#">Web Frontend for File Server</a></h3>
+                <ul class="nav">
+                    <li class="active"><a href="/">Home</a></li>
+                    <li><a href="/settings">Settings</a></li>
+                    <li><a href="/status">Status</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+                {# todo fix this later to only show on other pages than Home #}
+                <form action="">
+                    <input type="text" placeholder="Quick search">
+                </form>
+
+            {% endblock topbar_container %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    {% block container %}
+
+        {% block container-hero %}
+            <div class="hero-unit">
+                {% block container-hero-unit %}
+                {% endblock container-hero-unit %}
+            </div>
+        {% endblock container-hero %}
+
+        {% block container-content %}
+        {% endblock container-content %}
+
+    <footer>
+        {% block footer %}
+            <p>Copyleft | Anto Cvitić 2011 | All rights reversed </p>
+        {% endblock footer %}
+    <div class="row">
+        <div id="log" class="columns span16">
+            
+        </div>
+    </div>
+    </footer>
+
+    {% endblock container %}
+</div> <!-- /container -->
+
+</body>
+</html>
